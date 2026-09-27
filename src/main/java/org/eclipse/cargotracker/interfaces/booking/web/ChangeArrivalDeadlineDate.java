@@ -97,11 +97,14 @@ public class ChangeArrivalDeadlineDate implements Serializable {
     }
 
     /**
-     * Closes the dynamic dialog on successful submission. Extracted so that
-     * it can be overridden in container-free unit tests, where no
-     * {@link PrimeFaces} instance is available.
+     * Closes the dynamic dialog on successful submission when opened with a
+     * dialog context. Direct requests have no dialog to close. Extracted so
+     * that it can be overridden in container-free unit tests.
      */
     void closeDialog() {
-        PrimeFaces.current().dialog().closeDynamic("DONE");
+        if (FacesContext.getCurrentInstance().getExternalContext()
+                .getRequestParameterMap().containsKey("pfdlgcid")) {
+            PrimeFaces.current().dialog().closeDynamic("DONE");
+        }
     }
 }
