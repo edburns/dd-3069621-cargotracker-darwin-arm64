@@ -17,8 +17,8 @@ public class DefaultBookingServiceFacadeTest {
     @Test
     public void delegatesDeadlineChangeToBookingService() {
         RecordingBookingService bookingService = new RecordingBookingService();
-        DefaultBookingServiceFacade facade
-                = new DefaultBookingServiceFacade(bookingService);
+        DefaultBookingServiceFacade facade = new DefaultBookingServiceFacade();
+        facade.setBookingService(bookingService);
         Date arrivalDeadline = new Date();
 
         facade.changeDeadline("ABC123", arrivalDeadline);

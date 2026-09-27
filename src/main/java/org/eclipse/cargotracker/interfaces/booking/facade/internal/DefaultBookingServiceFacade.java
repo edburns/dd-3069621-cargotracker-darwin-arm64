@@ -28,6 +28,7 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
         Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Inject
     private BookingService bookingService;
     @Inject
     private LocationRepository locationRepository;
@@ -36,8 +37,7 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
     @Inject
     private VoyageRepository voyageRepository;
 
-    @Inject
-    DefaultBookingServiceFacade(BookingService bookingService) {
+    void setBookingService(BookingService bookingService) {
         this.bookingService = bookingService;
     }
 
