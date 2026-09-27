@@ -39,15 +39,12 @@ public class ChangeArrivalDeadlineDateTest {
 
     @Test
     public void loadSurfacesMalformedDeadlineInsteadOfNull() {
-        CargoRoute malformed = new CargoRoute("ABC123", "SEEEE", "USNYC",
-                new Date(), false, false, "SEEEE", "NOT_RECEIVED") {
-            private static final long serialVersionUID = 1L;
+        assertMalformedDeadlineRejected("not-a-date");
+        assertMalformedDeadlineRejected("02/30/2020");
+    }
 
-            @Override
-            public String getArrivalDeadlineDate() {
-                return "not-a-date";
-            }
-        };
+    private void assertMalformedDeadlineRejected(final String deadline) {
+        CargoRoute malformed = cargoRouteWithDeadline(deadline);
         RecordingBookingServiceFacade facade = new RecordingBookingServiceFacade(malformed);
         ChangeArrivalDeadlineDate bean = new ChangeArrivalDeadlineDate();
         bean.setBookingServiceFacade(facade);
@@ -60,6 +57,18 @@ public class ChangeArrivalDeadlineDateTest {
             assertEquals(ParseException.class, e.getCause().getClass());
         }
         assertNull(bean.getArrivalDeadlineDate());
+    }
+
+    private CargoRoute cargoRouteWithDeadline(final String deadline) {
+        return new CargoRoute("ABC123", "SEEEE", "USNYC",
+                new Date(), false, false, "SEEEE", "NOT_RECEIVED") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public String getArrivalDeadlineDate() {
+                return deadline;
+            }
+        };
     }
 
     @Test
