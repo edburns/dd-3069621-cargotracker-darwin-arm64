@@ -63,7 +63,9 @@ view of registered cargo. You can book cargo using the booking interface.
 One cargo is booked, you can route it. When you initiate a routing request,
 the system will determine routes that might work for the cargo. Once you select
 a route, the cargo will be ready to process handling events at the port. You can
-also change the destination for cargo if needed or track cargo.
+also change the destination for cargo if needed or track cargo. For cargo that
+is not yet routed, you can also change the arrival deadline date from the
+dashboard's Not Routed Cargo table.
 
 The Incident Logging interface is intended for port personnel registering what 
 happened to cargo. The interface is primarily intended for mobile devices, but
