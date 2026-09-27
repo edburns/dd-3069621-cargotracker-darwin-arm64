@@ -26,7 +26,7 @@ public class ChangeArrivalDeadlineDateDialogViewTest {
 
         assertEquals("metadata", metadata.getLocalName());
         assertEquals("http://xmlns.jcp.org/jsf/core", metadata.getNamespaceURI());
-        assertEquals("head", nextElementSibling(metadata).getLocalName());
+        assertEquals("head", nextElementSibling(metadata.getNextSibling()).getLocalName());
         assertEquals("#{changeArrivalDeadlineDate.trackingId}",
                 element(view, "http://xmlns.jcp.org/jsf/core", "viewParam")
                         .getAttribute("value"));
