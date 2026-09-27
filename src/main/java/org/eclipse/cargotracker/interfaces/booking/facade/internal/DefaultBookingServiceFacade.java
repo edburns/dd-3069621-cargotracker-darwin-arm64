@@ -28,7 +28,6 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
         Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Inject
     private BookingService bookingService;
     @Inject
     private LocationRepository locationRepository;
@@ -36,6 +35,11 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
     private CargoRepository cargoRepository;
     @Inject
     private VoyageRepository voyageRepository;
+
+    @Inject
+    DefaultBookingServiceFacade(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
 
     @Override
     public List<org.eclipse.cargotracker.interfaces.booking.facade.dto.Location> listShippingLocations() {
