@@ -41,6 +41,16 @@ public class ChangeArrivalDeadlineDateDialogViewTest {
         assertEquals("arrivalDeadlineDate", element(view,
                 "http://primefaces.org/ui", "message").getAttribute("for"));
         assertEquals("arrivalDeadlineDate", labeledDate(view).getAttribute("for"));
+
+        NodeList buttons = view.getElementsByTagNameNS("http://primefaces.org/ui", "commandButton");
+        for (int i = 0; i < buttons.getLength(); i++) {
+            Element button = (Element) buttons.item(i);
+            if ("Update".equals(button.getAttribute("value"))) {
+                assertEquals("@form", button.getAttribute("process"));
+                return;
+            }
+        }
+        throw new AssertionError("Update button not found");
     }
 
     private Element labeledDate(Document view) {
