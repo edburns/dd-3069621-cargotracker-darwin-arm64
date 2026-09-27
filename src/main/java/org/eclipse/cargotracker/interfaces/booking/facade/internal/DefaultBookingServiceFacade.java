@@ -37,6 +37,10 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
     @Inject
     private VoyageRepository voyageRepository;
 
+    void setBookingService(BookingService bookingService) {
+        this.bookingService = bookingService;
+    }
+
     @Override
     public List<org.eclipse.cargotracker.interfaces.booking.facade.dto.Location> listShippingLocations() {
         List<Location> allLocations = locationRepository.findAll();
@@ -75,6 +79,11 @@ public class DefaultBookingServiceFacade implements BookingServiceFacade,
     public void changeDestination(String trackingId, String destinationUnLocode) {
         bookingService.changeDestination(new TrackingId(trackingId),
                 new UnLocode(destinationUnLocode));
+    }
+
+    @Override
+    public void changeDeadline(String trackingId, Date arrivalDeadline) {
+        bookingService.changeDeadline(new TrackingId(trackingId), arrivalDeadline);
     }
 
     @Override
