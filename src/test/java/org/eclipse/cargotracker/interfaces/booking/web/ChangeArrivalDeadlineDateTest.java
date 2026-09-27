@@ -103,6 +103,29 @@ public class ChangeArrivalDeadlineDateTest {
         assertEquals(0, bean.closeDialogCalls);
     }
 
+    @Test
+    public void changeArrivalDeadlineLeavesDialogOpenWhenFacadeFails() {
+        final RuntimeException failure = new RuntimeException("Unable to change deadline");
+        RecordingBookingServiceFacade facade = new RecordingBookingServiceFacade(null) {
+            @Override
+            public void changeDeadline(String trackingId, Date arrivalDeadline) {
+                throw failure;
+            }
+        };
+        RecordingChangeArrivalDeadlineDate bean = new RecordingChangeArrivalDeadlineDate();
+        bean.setBookingServiceFacade(facade);
+        bean.setTrackingId("ABC123");
+        bean.setArrivalDeadlineDate(new Date());
+
+        try {
+            bean.changeArrivalDeadline();
+            fail("Expected the facade failure to propagate");
+        } catch (RuntimeException e) {
+            assertSame(failure, e);
+        }
+        assertEquals(0, bean.closeDialogCalls);
+    }
+
     private static Date dateOnly(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
