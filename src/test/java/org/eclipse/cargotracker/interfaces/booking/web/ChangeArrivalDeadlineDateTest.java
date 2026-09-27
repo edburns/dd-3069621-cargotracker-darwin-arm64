@@ -41,6 +41,8 @@ public class ChangeArrivalDeadlineDateTest {
     public void loadSurfacesMalformedDeadlineInsteadOfNull() {
         assertMalformedDeadlineRejected("not-a-date");
         assertMalformedDeadlineRejected("02/30/2020");
+        assertMalformedDeadlineRejected("12/25/2020junk");
+        assertMalformedDeadlineRejected(null);
     }
 
     private void assertMalformedDeadlineRejected(final String deadline) {

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.text.ParseException;
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -63,7 +64,16 @@ public class ChangeArrivalDeadlineDate implements Serializable {
         try {
             SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
             dateFormat.setLenient(false);
-            arrivalDeadlineDate = dateFormat.parse(cargo.getArrivalDeadlineDate());
+            String deadline = cargo.getArrivalDeadlineDate();
+            if (deadline == null) {
+                throw new ParseException("Arrival deadline date is null", 0);
+            }
+            ParsePosition position = new ParsePosition(0);
+            Date parsedDeadline = dateFormat.parse(deadline, position);
+            if (parsedDeadline == null || position.getIndex() != deadline.length()) {
+                throw new ParseException("Invalid arrival deadline date", position.getErrorIndex());
+            }
+            arrivalDeadlineDate = parsedDeadline;
         } catch (ParseException e) {
             throw new RuntimeException(
                     "Error parsing arrival deadline date", e);
